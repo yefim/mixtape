@@ -1,7 +1,7 @@
 Songerator
 ============
 
-# To run
+## To run
 
 * curl https://install.meteor.com/ | sh
 * then run `meteor`
