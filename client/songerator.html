@@ -1,0 +1,56 @@
+<head>
+  <title>Songerator</title>
+</head>
+
+<body>
+</body>
+
+<template name='login'>
+  {{> loginButtons }}
+</template>
+
+<template name='home'>
+  {{> loginButtons }}
+  This is the home page.
+
+  <a href="{{pathFor route='create'}}">Create song</a>
+
+  <ul>
+  {{#each songs }}
+    <li>
+      {{#if iRecorded _id ../recordingsHash }}
+      <a class='recorded' href="{{pathFor route='song' }}">{{ name }}</a>
+      {{ else }}
+      <a class='not-recorded-yet' href="{{pathFor route='record'}}">{{ name }}</a>
+      {{/if}}
+    </li>
+  {{/each}}
+  </ul>
+</template>
+
+<template name='create'>
+  Give the song a name and select friends to jam with.
+  <form class='create'>
+    <input name='name' type='name' placeholder='Name of song'>
+    <button type='submit'>Create</button>
+  </form>
+</template>
+
+<template name='record'>
+  <form class='record'>
+    <input type='hidden' name='songId' value='{{ songId }}'>
+    {{#if isRecording}}
+    <button type='button' class='stop-button'>Stop Recording</button>
+    {{else}}
+    <button type='button' class='record-button'>Record</button>
+    {{/if}}
+    <button type='submit'>Submit recording</button>
+  </form>
+</template>
+
+<template name='song'>
+  This is a song named {{ song.name }}. There are {{ recordings.count }} recordings for it.
+  {{#each recordings}}
+    <audio src='{{ src blob }}' controls='true'></audio>
+  {{/each}}
+</template>
