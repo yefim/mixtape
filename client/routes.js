@@ -6,6 +6,10 @@ Router.onBeforeAction(function() {
   window.sources.forEach(function(source) {
     source.stop();
   });
+  if (window.rafID) {
+    window.cancelAnimationFrame(window.rafID);
+    window.rafID = null;
+  }
   if (!Meteor.userId()) {
     this.render('login');
   } else {
