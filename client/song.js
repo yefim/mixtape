@@ -1,60 +1,46 @@
 var audioContext = null;
 
-function BufferLoader(context, urlList, callback) {
+function BufferLoader(context, arrayBuffers, callback) {
   this.context = context;
-  this.urlList = urlList;
+  this.arrayBuffers = arrayBuffers;
   this.onload = callback;
   this.bufferList = new Array();
   this.loadCount = 0;
 }
 
-BufferLoader.prototype.loadBuffer = function(url, index) {
-  // Load buffer asynchronously
-  var request = new XMLHttpRequest();
-  request.open("GET", url, true);
-  request.responseType = "arraybuffer";
-
+BufferLoader.prototype.loadBuffer = function(arrayBuffer, index) {
   var loader = this;
 
-  request.onload = function() {
-    // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
-      request.response,
-      function(buffer) {
-        if (!buffer) {
-          alert('error decoding file data: ' + url);
-          return;
-        }
-        loader.bufferList[index] = buffer;
-        if (++loader.loadCount == loader.urlList.length)
-          loader.onload(loader.bufferList);
-      },
-      function(error) {
-        console.error('decodeAudioData error', error);
+  // Asynchronously decode the audio file data in request.response
+  loader.context.decodeAudioData(
+    arrayBuffer,
+    function(buffer) {
+      if (!buffer) {
+        console.log('error decoding file data: ' + url);
+        return;
       }
-    );
-  }
-
-  request.onerror = function() {
-    alert('BufferLoader: XHR error');
-  }
-
-  request.send();
+      loader.bufferList[index] = buffer;
+      if (++loader.loadCount == loader.arrayBuffers.length) {
+        loader.onload(loader.bufferList);
+      }
+    },
+    function(error) {
+      console.error('decodeAudioData error', error);
+    }
+  );
 }
 
 BufferLoader.prototype.load = function() {
-  for (var i = 0; i < this.urlList.length; ++i)
-  this.loadBuffer(this.urlList[i], i);
+  for (var i = 0; i < this.arrayBuffers.length; ++i)
+  this.loadBuffer(this.arrayBuffers[i], i);
 }
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 var playRecordings = function(err, recordings) {
   audioContext = new AudioContext(); // reinitialize that shit so hard
-  var recordingUrls = recordings.map(function(recording) {
-    var blob = recording.blob;
-    var song = new Blob([blob.file], {type: blob.type});
-    return URL.createObjectURL(song);
+  var arrayBuffers = recordings.map(function(recording) {
+    return recording.blob.file.buffer;
   });
 
   var playSound = function(time, buffer) {
@@ -83,7 +69,7 @@ var playRecordings = function(err, recordings) {
     }
   };
 
-  var bufferLoader = new BufferLoader(audioContext, recordingUrls, finishedLoading);
+  var bufferLoader = new BufferLoader(audioContext, arrayBuffers, finishedLoading);
   bufferLoader.load();
 };
 
