@@ -11,3 +11,4 @@ accounts-base
 accounts-facebook
 accounts-ui
 iron:router
+sacha:spin
