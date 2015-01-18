@@ -21,7 +21,6 @@ var initAudio = function() {
         "optional": []
       },
     }, gotStream, function(e) {
-      alert('Error getting audio');
       console.log(e);
     }
   );
@@ -79,6 +78,7 @@ Template.record.events({
     Session.set('isRecording', true);
   },
   'click .stop-button': function() {
+    Session.set('showSave', true);
     audioRecorder.stop();
     audioRecorder.exportWAV(function(blob) {
       audioBlob = blob;
@@ -89,6 +89,7 @@ Template.record.events({
       document.querySelector('.record').appendChild(au);
 
       Session.set('isRecording', false);
+      audioRecorder.clear();
     });
   },
   'submit .record': function(e) {
@@ -109,6 +110,9 @@ Template.record.events({
 Template.record.helpers({
   isRecording: function() {
     return Session.get('isRecording');
+  },
+  showSave: function() {
+    return Session.get('showSave');
   }
 });
 
