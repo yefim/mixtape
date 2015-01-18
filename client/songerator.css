@@ -78,7 +78,7 @@ $color5: #2fbf71
 }
 
 .create {
-  padding: 10px;
+  padding: 40px 10px;
 }
 
 .create label, .create button, .create input, .record button, .button {
@@ -88,7 +88,12 @@ $color5: #2fbf71
   text-align: center;
   color: white;
   font-size: 20pt;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.create label {
+  margin-bottom: 0;
 }
 
 .create input {
@@ -147,11 +152,11 @@ $color5: #2fbf71
 }
 
 .record {
-  padding: 10px;
+  padding: 40px 10px;
 }
 
 .song-show {
-  padding: 10px;
+  padding: 40px 10px;
 }
 
 .song-name {
@@ -159,7 +164,5 @@ $color5: #2fbf71
   margin: 0;
   text-align: center;
   color: white;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
-
-
