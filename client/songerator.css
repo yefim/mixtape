@@ -182,6 +182,11 @@ $color5: #2fbf71
   margin-bottom: 40px;
 }
 
+.song-name a, .song-name a:hover, .song-name a:visited {
+  text-decoration: none;
+  color: white;
+}
+
 #analyser {
   position: absolute;
   bottom: 0;

@@ -58,7 +58,7 @@
 
 <template name='song'>
   <div class='song-show'>
-    <h1 class='song-name'>{{ song.name }}</h1>
+    <h1 class='song-name'><a href="{{pathFor route='home'}}">&lArr; {{ song.name }}</a></h1>
     <a class='button' href="{{pathFor route='record' data=song}}">Add your sound</a>
   </div>
   <canvas id='analyser'></canvas>
