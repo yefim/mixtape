@@ -49,6 +49,7 @@ BufferLoader.prototype.load = function() {
 }
 
 var playRecordings = function(err, recordings) {
+  Session.set('doneLoading', true);
   audioContext = new AudioContext(); // reinitialize that shit so hard
   analyser = audioContext.createAnalyser();
   var arrayBuffers = recordings.map(function(recording) {
@@ -139,3 +140,9 @@ Template.song.rendered = function() {
     playRecordings(err, recordings);
   });
 };
+
+Template.song.helpers({
+  doneLoading: function() {
+    return !!Session.get('doneLoading');
+  }
+});

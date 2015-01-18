@@ -61,6 +61,9 @@
     <h1 class='song-name'><a href="{{pathFor route='home'}}">&lArr; {{ song.name }}</a></h1>
     <a class='button' href="{{pathFor route='record' data=song}}">Add your sound</a>
   </div>
+  {{#unless doneLoading}}
+  {{> spinner}}
+  {{/unless}}
   <canvas id='analyser'></canvas>
 </template>
 
