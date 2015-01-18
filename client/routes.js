@@ -1,6 +1,9 @@
 Router.onBeforeAction(function() {
   Session.set('showSave'); // reset showSave
-  Session.set('sources'); // reset all audio sources
+  window.sources || (window.sources = []);
+  window.sources.forEach(function(source) {
+    source.stop();
+  });
   if (!Meteor.userId()) {
     this.render('login');
   } else {

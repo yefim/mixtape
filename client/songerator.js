@@ -73,16 +73,18 @@ var BinaryFileReader = {
 Template.record.rendered = initAudio;
 
 var playSound = function(buffer) {
-  source = audioContext.createBufferSource();
+  var source = audioContext.createBufferSource();
   source.buffer = buffer;
   source.loop = true;
   source.connect(audioContext.destination);
   source.start(0);
-  // Sessions.get('sources').push(source);
+  window.sources.push(source);
 }
 
 Template.record.events({
   'click .record-button': function() {
+    _.invoke(window.sources, 'stop');
+    window.sources = [];
     audioRecorder.record();
     Session.set('isRecording', true);
   },

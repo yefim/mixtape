@@ -48,6 +48,7 @@ var playRecordings = function(err, recordings) {
     source.buffer = buffer;
     source.connect(audioContext.destination);
     source.start(time);
+    window.sources.push(source);
   }
 
   // remix them tracks
