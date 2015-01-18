@@ -22,16 +22,9 @@
 <template name='home'>
   <ul class='songs'>
     {{#each songs }}
-      {{#if iRecorded _id ../recordingsHash }}
       <li class='song'>
         <a href="{{pathFor route='song' }}">{{ name }}</a>
       </li>
-      {{ else }}
-      <li class='song'>
-        <a href="{{pathFor route='song'}}">{{ name }}</a>
-        <div class='record-todo'></div>
-      </li>
-      {{/if}}
     {{/each}}
     <li class='song'>
       <a href="{{pathFor route='create'}}">+</a>

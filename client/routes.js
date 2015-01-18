@@ -1,3 +1,5 @@
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
 Router.onBeforeAction(function() {
   Session.set('showSave'); // reset showSave
   window.sources || (window.sources = []);
@@ -14,16 +16,7 @@ Router.onBeforeAction(function() {
 Router.route('/', function() {
   this.render('home', {
     data: function() {
-      var recordings = Recordings.find({userId: Meteor.userId()});
-      var recordingsHash = {};
-      recordings.forEach(function(recording) {
-        recordingsHash[recording.songId] = true;
-      });
-      var data = {
-        songs: Songs.find(),
-        recordingsHash: recordingsHash
-      };
-      return data;
+      return {songs: Songs.find()};
     }
   });
 }, {name: 'home'});

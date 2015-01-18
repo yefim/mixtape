@@ -35,8 +35,6 @@ BufferLoader.prototype.load = function() {
   this.loadBuffer(this.arrayBuffers[i], i);
 }
 
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
 var playRecordings = function(err, recordings) {
   audioContext = new AudioContext(); // reinitialize that shit so hard
   var arrayBuffers = recordings.map(function(recording) {
@@ -75,5 +73,13 @@ var playRecordings = function(err, recordings) {
 };
 
 Template.song.rendered = function() {
-  Meteor.call('fetchRecordings', this.data.songId, playRecordings);
+  var now = Date.now();
+  console.log('about to fetch recordings at ' + now);
+  Meteor.call('fetchRecordings', this.data.songId, function(err, recordings) {
+    var then = Date.now();
+    console.log('fetched at ' + then);
+    console.log(then - now);
+
+    playRecordings(err, recordings);
+  });
 };
