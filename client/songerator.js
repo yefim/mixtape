@@ -4,7 +4,7 @@ var audioContext = audioContext || new AudioContext();
 var audioRecorder = null;
 var audioBlob = null;
 
-var startRecording = function() {
+var initAudio = function() {
   if (!navigator.getUserMedia) {
     navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   }
@@ -50,10 +50,7 @@ var gotStream = function(stream) {
   var zeroGain = audioContext.createGain();
   zeroGain.gain.value = 0.0;
   inputPoint.connect(zeroGain);
-  zeroGain.connect( audioContext.destination );
-
-  audioRecorder.record();
-  Session.set('isRecording', true);
+  zeroGain.connect(audioContext.destination);
 }
 
 var BinaryFileReader = {
@@ -80,9 +77,12 @@ var BinaryFileReader = {
   }
 }
 
+Template.record.rendered = initAudio;
+
 Template.record.events({
   'click .record-button': function() {
-    startRecording();
+    audioRecorder.record();
+    Session.set('isRecording', true);
   },
   'click .stop-button': function() {
     audioRecorder.stop();

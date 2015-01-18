@@ -39,7 +39,7 @@
 <template name='create'>
   <form class='create'>
     <label for='name'>Give the song a name</label>
-    <input id='name' name='name' type='name' placeholder='NAME OF SONG'>
+    <input autofocus id='name' name='name' type='name' placeholder='NAME OF SONG'>
     <button type='submit'>Add Song</button>
   </form>
 </template>
@@ -57,5 +57,5 @@
 </template>
 
 <template name='song'>
-  <h1 class='song-name'>{{ song.name }}</h1>
+  <h1 class='song-name'><a href="{{pathFor route='home'}}">{{ song.name }}</a></h1>
 </template>

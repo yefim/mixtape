@@ -1,3 +1,5 @@
+var audioContext = null;
+
 function BufferLoader(context, urlList, callback) {
   this.context = context;
   this.urlList = urlList;
@@ -47,16 +49,8 @@ BufferLoader.prototype.load = function() {
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var audioContext = audioContext || new AudioContext();
-
-Template.song.helpers({
-  src: function(blob) {
-    var song = new Blob([blob.file], {type: blob.type});
-    return URL.createObjectURL(song);
-  }
-});
-
 Template.song.rendered = function() {
+  audioContext = new AudioContext(); // reinitialize that shit so hard
   var recordingUrls = this.data.recordings.map(function(recording) {
     var blob = recording.blob;
     var song = new Blob([blob.file], {type: blob.type});
@@ -68,20 +62,22 @@ Template.song.rendered = function() {
     source.buffer = buffer;
     source.connect(audioContext.destination);
     source.start(time);
+    console.log(time);
   }
 
   // remix them tracks
   var finishedLoading = function(bufferList) {
+    var sortedBuffers = bufferList.sort(function(a, b) {
+      return a.duration < b.duration;
+    });
     var tracks = 0;
-    for (var i = 0; i < 20; i+=2) {
-      var buffer = bufferList[tracks];
-      console.log(buffer);
+    for (var i = 0; i < 6; i+=2) {
+      var buffer = sortedBuffers[tracks];
       playSound(buffer, i);
-      tracks = (tracks + 1) % bufferList.length;
+      tracks = (tracks + 1) % sortedBuffers.length;
     }
   };
 
-  var bufferLoader =  new BufferLoader(audioContext, recordingUrls, finishedLoading);
+  var bufferLoader = new BufferLoader(audioContext, recordingUrls, finishedLoading);
   bufferLoader.load();
-  console.log(recordingUrls);
 };

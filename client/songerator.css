@@ -62,6 +62,15 @@ $color5: #2fbf71
 }
 .song:nth-child(4n-3) {
   background-color: #363537;
+  /*
+  background: repeating-linear-gradient(
+    40deg,
+    #ef2d56,
+    #ef2d56 10px,
+    #363537 10px,
+    #363537 20px
+  );
+  */
 }
 
 .create {
