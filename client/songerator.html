@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8">
-  <title>Songerator</title>
-  <meta name="description" content="Create songs with friends">
+  <title>Mixtape</title>
+  <meta name="description" content="Create remixes and mixtapes with friends">
   <meta name="author" content="Geoffrey Vedernikoff">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,9 +36,9 @@
 
 <template name='create'>
   <form class='create'>
-    <label for='name'>Give the song a name</label>
-    <input autofocus id='name' name='name' type='name' placeholder='NAME OF SONG'>
-    <button type='submit'>Add Song</button>
+    <label for='name'>Give the tape a name</label>
+    <input autofocus id='name' name='name' type='name' placeholder='NAME OF TAPE'>
+    <button type='submit'>Mix it</button>
   </form>
 </template>
 
@@ -51,7 +51,7 @@
     <button type='button' class='record-button'>Record Sound</button>
     {{/if}}
     {{#if showSave}}
-    <button type='submit'>Add to song</button>
+    <button type='submit'>Add to tape</button>
     {{/if}}
   </form>
 </template>
