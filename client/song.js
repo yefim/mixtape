@@ -10,7 +10,6 @@ return window.requestAnimationFrame  ||
 })();
 
 window.rafID = null;
-var audioContext = null;
 var analyser = null;
 
 function BufferLoader(context, arrayBuffers, callback) {
@@ -50,17 +49,16 @@ BufferLoader.prototype.load = function() {
 
 var playRecordings = function(err, recordings) {
   Session.set('doneLoading', true);
-  audioContext = new AudioContext(); // reinitialize that shit so hard
-  analyser = audioContext.createAnalyser();
+  analyser = window.audioContext.createAnalyser();
   var arrayBuffers = recordings.map(function(recording) {
     return recording.blob.file.buffer;
   });
 
   var playSound = function(time, buffer) {
-    var source = audioContext.createBufferSource();
+    var source = window.audioContext.createBufferSource();
     source.buffer = buffer;
     source.connect(analyser); // connect every source to the analyser
-    source.start(time);
+    source.start(window.audioContext.currentTime + time);
     window.sources.push(source);
   }
 
@@ -78,14 +76,14 @@ var playRecordings = function(err, recordings) {
     }
 
     // connect the analyser to the output
-    analyser.connect(audioContext.destination);
+    analyser.connect(window.audioContext.destination);
     for (var time = 0; time < SONG_LENGTH; time += longestBuffer.duration - OVERLAP) {
       // play all the sounds to the longestBuffer beat
       bufferList.forEach(playSound.bind(this, time));
     }
   };
 
-  var bufferLoader = new BufferLoader(audioContext, arrayBuffers, finishedLoading);
+  var bufferLoader = new BufferLoader(window.audioContext, arrayBuffers, finishedLoading);
   bufferLoader.load();
 
   var canvas = document.getElementById('analyser');

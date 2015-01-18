@@ -1,6 +1,3 @@
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-var audioContext = audioContext || new AudioContext();
 var audioRecorder = null;
 var audioFile = null;
 
@@ -27,23 +24,23 @@ var initAudio = function() {
 };
 
 var gotStream = function(stream) {
-  var inputPoint = audioContext.createGain();
+  var inputPoint = window.audioContext.createGain();
 
   // Create an AudioNode from the stream.
-  var realAudioInput = audioContext.createMediaStreamSource(stream);
+  var realAudioInput = window.audioContext.createMediaStreamSource(stream);
   var audioInput = realAudioInput;
   audioInput.connect(inputPoint);
 
-  var analyserNode = audioContext.createAnalyser();
+  var analyserNode = window.audioContext.createAnalyser();
   analyserNode.fftSize = 2048;
   inputPoint.connect(analyserNode);
 
   audioRecorder = new Recorder(inputPoint);
 
-  var zeroGain = audioContext.createGain();
+  var zeroGain = window.audioContext.createGain();
   zeroGain.gain.value = 0.0;
   inputPoint.connect(zeroGain);
-  zeroGain.connect(audioContext.destination);
+  zeroGain.connect(window.audioContext.destination);
 }
 
 var BinaryFileReader = {
@@ -73,10 +70,10 @@ var BinaryFileReader = {
 Template.record.rendered = initAudio;
 
 var playSound = function(buffer) {
-  var source = audioContext.createBufferSource();
+  var source = window.audioContext.createBufferSource();
   source.buffer = buffer;
   source.loop = true;
-  source.connect(audioContext.destination);
+  source.connect(window.audioContext.destination);
   source.start(0);
   window.sources.push(source);
 }
@@ -96,7 +93,7 @@ Template.record.events({
       BinaryFileReader.read(blob, function(err, fileInfo) {
         audioFile = fileInfo;
 
-        audioContext.decodeAudioData(audioFile.file.buffer,
+        window.audioContext.decodeAudioData(audioFile.file.buffer,
           function(buffer) {
             if (!buffer) {
               console.log('error decoding');

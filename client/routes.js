@@ -3,6 +3,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 Router.onBeforeAction(function() {
   Session.set('showSave'); // reset showSave
   Session.set('doneLoading'); // reset doneLoading
+  window.audioContext || (window.audioContext = new AudioContext());
   window.sources || (window.sources = []);
   window.sources.forEach(function(source) {
     source.stop();
