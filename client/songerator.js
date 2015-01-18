@@ -97,7 +97,7 @@ Template.record.events({
       var songId = e.target.songId.value;
       BinaryFileReader.read(audioBlob, function(err, fileInfo) {
         Recordings.insert({songId: songId, userId: Meteor.userId(), blob: fileInfo});
-        Router.go('home');
+        Router.go('song', {_id: songId});
       });
     }
   }
