@@ -1,5 +1,10 @@
 <head>
+  <meta charset="utf-8">
   <title>Songerator</title>
+  <meta name="description" content="Create songs with friends">
+  <meta name="author" content="Geoffrey Vedernikoff">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
@@ -10,29 +15,33 @@
 </template>
 
 <template name='home'>
-  {{> loginButtons }}
-  This is the home page.
-
-  <a href="{{pathFor route='create'}}">Create song</a>
-
-  <ul>
-  {{#each songs }}
-    <li>
+  <ul class='songs'>
+    {{#each songs }}
       {{#if iRecorded _id ../recordingsHash }}
-      <a class='recorded' href="{{pathFor route='song' }}">{{ name }}</a>
+      <li class='song'>
+        <a href="{{pathFor route='song' }}">{{ name }}</a>
+      </li>
       {{ else }}
-      <a class='not-recorded-yet' href="{{pathFor route='record'}}">{{ name }}</a>
+      <li class='song'>
+        <a href="{{pathFor route='record'}}">{{ name }}</a>
+        <div class='record-todo'></div>
+      </li>
       {{/if}}
+    {{/each}}
+    <li class='song'>
+      <a href="{{pathFor route='create'}}">+</a>
     </li>
-  {{/each}}
   </ul>
+
+  {{> loginButtons }}
+  <a href="{{pathFor route='create'}}">Create song</a>
 </template>
 
 <template name='create'>
-  Give the song a name and select friends to jam with.
   <form class='create'>
-    <input name='name' type='name' placeholder='Name of song'>
-    <button type='submit'>Create</button>
+    <label for='name'>Give the song a name</label>
+    <input id='name' name='name' type='name' placeholder='NAME OF SONG'>
+    <button type='submit'>Add Song</button>
   </form>
 </template>
 
@@ -42,15 +51,12 @@
     {{#if isRecording}}
     <button type='button' class='stop-button'>Stop Recording</button>
     {{else}}
-    <button type='button' class='record-button'>Record</button>
+    <button type='button' class='record-button'>Record Sound</button>
     {{/if}}
-    <button type='submit'>Submit recording</button>
+    <button type='submit'>Save Recording</button>
   </form>
 </template>
 
 <template name='song'>
-  This is a song named {{ song.name }}. There are {{ recordings.count }} recordings for it.
-  {{#each recordings}}
-    <audio src='{{ src blob }}' controls='true'></audio>
-  {{/each}}
+  <h1 class='song-name'>{{ song.name }}</h1>
 </template>

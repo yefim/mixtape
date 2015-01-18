@@ -1,6 +1,6 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var audioContext = new AudioContext();
+var audioContext = audioContext || new AudioContext();
 var audioRecorder = null;
 var audioBlob = null;
 
