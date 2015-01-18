@@ -16,7 +16,7 @@ BufferLoader.prototype.loadBuffer = function(arrayBuffer, index) {
     arrayBuffer,
     function(buffer) {
       if (!buffer) {
-        console.log('error decoding file data: ' + url);
+        console.log('error decoding file data:');
         return;
       }
       loader.bufferList[index] = buffer;

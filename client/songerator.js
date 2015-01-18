@@ -2,7 +2,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 var audioContext = audioContext || new AudioContext();
 var audioRecorder = null;
-var audioBlob = null;
+var audioFile = null;
 
 var initAudio = function() {
   if (!navigator.getUserMedia) {
@@ -72,6 +72,15 @@ var BinaryFileReader = {
 
 Template.record.rendered = initAudio;
 
+var playSound = function(buffer) {
+  source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+  source.connect(audioContext.destination);
+  source.start(0);
+  // Sessions.get('sources').push(source);
+}
+
 Template.record.events({
   'click .record-button': function() {
     audioRecorder.record();
@@ -81,29 +90,34 @@ Template.record.events({
     Session.set('showSave', true);
     audioRecorder.stop();
     audioRecorder.exportWAV(function(blob) {
-      audioBlob = blob;
-      var url = URL.createObjectURL(audioBlob);
-      var au = document.createElement('audio');
-      au.controls = true;
-      au.src = url;
-      document.querySelector('.record').appendChild(au);
-
       Session.set('isRecording', false);
-      audioRecorder.clear();
+      BinaryFileReader.read(blob, function(err, fileInfo) {
+        audioFile = fileInfo;
+
+        audioContext.decodeAudioData(audioFile.file.buffer,
+          function(buffer) {
+            if (!buffer) {
+              console.log('error decoding');
+            }
+            playSound(buffer);
+          },
+          function(err) {
+            console.error(err);
+          }
+        );
+
+        audioRecorder.clear();
+      });
     });
   },
   'submit .record': function(e) {
     e.preventDefault();
-    if (audioBlob) {
-      var songId = e.target.songId.value;
-      console.log('about to read audioBlob');
-      BinaryFileReader.read(audioBlob, function(err, fileInfo) {
-        console.log('about to insert');
-        Recordings.insert({songId: songId, userId: Meteor.userId(), blob: fileInfo});
-        console.log('about to redirect');
-        Router.go('song', {_id: songId});
-      });
+    if (!audioFile) {
+      return;
     }
+    var songId = e.target.songId.value;
+    Recordings.insert({songId: songId, userId: Meteor.userId(), blob: audioFile});
+    Router.go('song', {_id: songId});
   }
 });
 
