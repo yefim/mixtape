@@ -5,6 +5,8 @@
   <meta name="author" content="Geoffrey Vedernikoff">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href='http://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -23,7 +25,7 @@
       </li>
       {{ else }}
       <li class='song'>
-        <a href="{{pathFor route='record'}}">{{ name }}</a>
+        <a href="{{pathFor route='song'}}">{{ name }}</a>
         <div class='record-todo'></div>
       </li>
       {{/if}}
@@ -57,5 +59,8 @@
 </template>
 
 <template name='song'>
-  <h1 class='song-name'><a href="{{pathFor route='home'}}">{{ song.name }}</a></h1>
+  <h1 class='song-name'>{{ song.name }}</h1>
+  {{#unless iRecorded song._id recordingsHash }}
+  <a class='button' href="{{pathFor route='record' data=song}}">Add your sound</a>
+  {{/unless}}
 </template>

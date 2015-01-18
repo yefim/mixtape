@@ -86,3 +86,9 @@ Template.song.rendered = function() {
   var bufferLoader = new BufferLoader(audioContext, recordingUrls, finishedLoading);
   bufferLoader.load();
 };
+
+Template.song.helpers({
+  iRecorded: function(song, recordingsHash) {
+    return recordingsHash[song];
+  }
+});

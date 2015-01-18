@@ -9,6 +9,10 @@ a {
   text-decoration: none;
 }
 
+body {
+  background-color: #363537;
+}
+
 .songs {
   margin: 0;
   padding: 0;
@@ -19,7 +23,7 @@ a {
   list-style: none;
   float: left;
   width: 50%;
-  height: 600px;
+  height: 200px; /* mobile first */
   background-color: #ef2d56;
   position: relative;
 }
@@ -29,24 +33,24 @@ a {
   width: 100%;
   height: 100%;
   text-align: center;
-  line-height: 600px;
+  line-height: 200px;
   text-transform: uppercase;
-  font-size: 45pt;
+  font-size: 20pt;
   color: #8cd867;
 }
 
 .song:last-child a {
-  font-size: 280pt;
+  font-size: 100pt;
 }
 
 .record-todo {
-  height: 30px;
-  width: 30px;
-  border-radius: 30px;
-  top: 15px;
-  right: 15px;
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  top: 10px;
+  right: 10px;
   position: absolute;
-  border: 5px solid #2fbf71;
+  border: 3px solid #2fbf71;
 }
 
 /*
@@ -77,13 +81,61 @@ $color5: #2fbf71
   padding: 10px;
 }
 
-.create label, .create button, .create input, .record button {
+.create label, .create button, .create input, .record button, .button {
   text-transform: uppercase;
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 45pt;
+  color: #8cd867;
+  font-size: 20pt;
   margin-bottom: 10px;
+}
+
+::-webkit-input-placeholder {
+   color: rgba(140, 216, 103, 0.5);
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: rgba(140, 216, 103, 0.5);
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: rgba(140, 216, 103, 0.5);
+}
+
+:-ms-input-placeholder {  
+   color: rgba(140, 216, 103, 0.5);
+}
+
+.create button, .record button, .button {
+  position: relative;
+  vertical-align: top;
+  background-color: #EF2D56;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #ed1240;
+  -webkit-box-shadow: inset 0 -2px #ed1240;
+  box-shadow: inset 0 -2px #ed1240;
+}
+.create button:active, .record button:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.record .record-button {
+  background-color: #ED7D3A;
+  border-bottom: 2px solid #eb6b1f;
+  -webkit-box-shadow: inset 0 -2px #eb6b1f;
+  box-shadow: inset 0 -2px #eb6b1f;
+}
+
+.record .stop-button {
+  background-color: #ED7D3A;
+  border-bottom: 2px solid #eb6b1f;
+  -webkit-box-shadow: inset 0 -2px #eb6b1f;
+  box-shadow: inset 0 -2px #eb6b1f;
 }
 
 .record {
@@ -94,4 +146,8 @@ $color5: #2fbf71
   text-transform: uppercase;
   margin: 0;
   text-align: center;
+  color: #8cd867;
+  margin-bottom: 10px;
 }
+
+
