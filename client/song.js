@@ -57,24 +57,29 @@ Template.song.rendered = function() {
     return URL.createObjectURL(song);
   });
 
-  var playSound = function(buffer, time) {
+  var playSound = function(time, buffer) {
     var source = audioContext.createBufferSource();
     source.buffer = buffer;
     source.connect(audioContext.destination);
     source.start(time);
-    console.log(time);
   }
 
   // remix them tracks
   var finishedLoading = function(bufferList) {
-    var sortedBuffers = bufferList.sort(function(a, b) {
+    var SONG_LENGTH = 10; // seconds
+    var OVERLAP = 0.1; // seconds
+    bufferList.sort(function(a, b) {
       return a.duration < b.duration;
     });
-    var tracks = 0;
-    for (var i = 0; i < 6; i+=2) {
-      var buffer = sortedBuffers[tracks];
-      playSound(buffer, i);
-      tracks = (tracks + 1) % sortedBuffers.length;
+
+    var longestBuffer = bufferList[0];
+    if (!longestBuffer) {
+      return;
+    }
+
+    for (var time = 0; time < SONG_LENGTH; time += longestBuffer.duration - OVERLAP) {
+      // play all the sounds to the longestBuffer beat
+      bufferList.forEach(playSound.bind(this, time));
     }
   };
 
