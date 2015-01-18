@@ -59,8 +59,10 @@
 </template>
 
 <template name='song'>
-  <h1 class='song-name'>{{ song.name }}</h1>
-  {{#unless iRecorded song._id recordingsHash }}
-  <a class='button' href="{{pathFor route='record' data=song}}">Add your sound</a>
-  {{/unless}}
+  <div class='song-show'>
+    <h1 class='song-name'>{{ song.name }}</h1>
+    {{#unless iRecorded song._id recordingsHash }}
+    <a class='button' href="{{pathFor route='record' data=song}}">Add your sound</a>
+    {{/unless}}
+  </div>
 </template>

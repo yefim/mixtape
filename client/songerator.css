@@ -142,6 +142,10 @@ $color5: #2fbf71
   padding: 10px;
 }
 
+.song-show {
+  padding: 10px;
+}
+
 .song-name {
   text-transform: uppercase;
   margin: 0;
