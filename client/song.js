@@ -49,9 +49,9 @@ BufferLoader.prototype.load = function() {
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-Template.song.rendered = function() {
+var playRecordings = function(err, recordings) {
   audioContext = new AudioContext(); // reinitialize that shit so hard
-  var recordingUrls = this.data.recordings.map(function(recording) {
+  var recordingUrls = recordings.map(function(recording) {
     var blob = recording.blob;
     var song = new Blob([blob.file], {type: blob.type});
     return URL.createObjectURL(song);
@@ -85,4 +85,8 @@ Template.song.rendered = function() {
 
   var bufferLoader = new BufferLoader(audioContext, recordingUrls, finishedLoading);
   bufferLoader.load();
+};
+
+Template.song.rendered = function() {
+  Meteor.call('fetchRecordings', this.data.songId, playRecordings);
 };

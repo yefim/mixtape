@@ -36,7 +36,7 @@ body {
   line-height: 200px;
   text-transform: uppercase;
   font-size: 20pt;
-  color: #8cd867;
+  color: white;
 }
 
 .song:last-child a {
@@ -50,7 +50,7 @@ body {
   top: 10px;
   right: 10px;
   position: absolute;
-  border: 3px solid #2fbf71;
+  border: 3px solid white;
 }
 
 /*
@@ -86,25 +86,33 @@ $color5: #2fbf71
   display: block;
   width: 100%;
   text-align: center;
-  color: #8cd867;
+  color: white;
   font-size: 20pt;
   margin-bottom: 10px;
 }
 
+.create input {
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid #EF2D56;
+}
+
+.create input:focus {
+  border-color: #ed1240;
+  box-shadow: 0 0 2px #ed1240;
+}
+
 ::-webkit-input-placeholder {
-   color: rgba(140, 216, 103, 0.5);
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: rgba(140, 216, 103, 0.5);
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: rgba(140, 216, 103, 0.5);
 }
 
 :-ms-input-placeholder {  
-   color: rgba(140, 216, 103, 0.5);
 }
 
 .create button, .record button, .button {
@@ -150,7 +158,7 @@ $color5: #2fbf71
   text-transform: uppercase;
   margin: 0;
   text-align: center;
-  color: #8cd867;
+  color: white;
   margin-bottom: 10px;
 }
 
