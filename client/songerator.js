@@ -115,6 +115,7 @@ Template.record.events({
       return;
     }
     var songId = e.target.songId.value;
+    e.target.add.disabled = true;
     Recordings.insert({songId: songId, userId: Meteor.userId(), blob: audioFile});
     Router.go('song', {_id: songId});
   }
