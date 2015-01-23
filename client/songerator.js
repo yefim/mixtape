@@ -82,8 +82,12 @@ Template.record.events({
   'click .record-button': function() {
     _.invoke(window.sources, 'stop');
     window.sources = [];
-    audioRecorder.record();
-    Session.set('isRecording', true);
+    if (audioRecorder) {
+      audioRecorder.record();
+      Session.set('isRecording', true);
+    } else {
+      // should check if prompt exists already
+    }
   },
   'click .stop-button': function() {
     Session.set('showSave', true);
@@ -115,7 +119,7 @@ Template.record.events({
       return;
     }
     var songId = e.target.songId.value;
-    e.target.add.disabled = true;
+    e.target.add.disabled = true; // disable Add button
     Recordings.insert({songId: songId, userId: Meteor.userId(), blob: audioFile});
     Router.go('song', {_id: songId});
   }
