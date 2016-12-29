@@ -1,4 +1,4 @@
-Songerator
+Mixtape
 ============
 
 ## To run
