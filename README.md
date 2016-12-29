@@ -1,8 +1,8 @@
 Mixtape
-============
+=======
 
-## To run
+Mixtape is a music app that lets you create a looping beat with looping sounds. Make music with loops.
 
-* curl https://install.meteor.com/ | sh
-* then run `meteor`
-* Ask me for FB app id and app secret
+## Contributors
+
+* [Yefim](https://twitter.com/yefim)
